@@ -20,54 +20,108 @@ const Shell = imports.gi.Shell;
 const Meta = imports.gi.Meta;
 const Main = imports.ui.main;
 
+const Gio = imports.gi.Gio;
+
+const _handles = [];
+
+const _windowids_maximized = {};
+const _windowids_size_change = {};
 let _settings;
 
-/* exported init */
+class Extension {
+
+  constructor() {
+  }
+
+  getRectangles(window) {
+    const rect = window.get_frame_rect();
+    const monitor = window.get_monitor();
+    const workspace = window.get_workspace();
+    const monitorWorkArea = workspace.get_work_area_for_monitor(monitor);
+
+    return {
+      window: {
+        h: rect.height,
+        w: rect.width,
+      },
+      workspace: {
+        x: monitorWorkArea.x,
+        y: monitorWorkArea.y,
+        h: monitorWorkArea.height,
+        w: monitorWorkArea.width,
+      },
+    };
+  }
+
+  addWindowMargins(window){
+    global.log("achim","addWindowMargins "+window.get_id());
+    global.log("uselessgaps","gapsize "+this.gapSize.toString());
+
+    const rects = this.getRectangles(window);
+    const fourthWidth = rects.workspace.w / 4;
+    const fourthHeight = rects.workspace.h / 4;
+    const xStart = rects.workspace.x + this.gapSize;
+    const yStart = rects.workspace.y + this.gapSize;
+    const newWidth = rects.window.w - (this.gapSize*2);
+    const newHeight = rects.window.h - (this.gapSize*2);
+
+    window.unmaximize(Meta.MaximizeFlags.BOTH);
+    //window.move_frame(false, xStart, yStart);
+    window.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
+  }
+
+  window_manager_size_change(act,change,rectold)
+  {
+    const win = act.meta_window;
+
+    if (win.window_type !== Meta.WindowType.NORMAL)
+      return;
+
+    if (change === Meta.SizeChange.MAXIMIZE)
+    {
+      if (win.get_maximized() === Meta.MaximizeFlags.BOTH)
+      {
+        global.log("achim change","=== Meta.MaximizeFlags.BOTH");
+        _windowids_size_change[win.get_id()]="gap";
+      }
+    }
+  }
+  window_manager_size_changed(act)
+  {
+    const win = act.meta_window;
+    global.log("achim","window_manager_size_changed "+win.get_id());
+
+    if (win.get_id() in _windowids_size_change) {
+      if (_windowids_size_change[win.get_id()]=="gap") {
+        this.addWindowMargins(win);
+      } else if (_windowids_size_change[win.get_id()]=="back") {
+        //this.backto(win);
+      }
+      delete _windowids_size_change[win.get_id()];
+    }
+  }
+
+  setGapSize(){
+    global.log("achim","gapsize changed");
+    this.gapSize = this._settings.get_int("gap-size");
+  }
+
+  enable() {
+    this._settings = ExtensionUtils.getSettings();
+    this._settings.connect("changed::gap-size", ()=>{this.setGapSize();} );
+    this.setGapSize();
+
+    _handles.push(global.window_manager.connect('size-changed', (_, act) => {this.window_manager_size_changed(act);}));
+    _handles.push(global.window_manager.connect('size-change', (_, act, change,rectold) => {this.window_manager_size_change(act,change,rectold);}));
+  }
+
+  disable() {
+    _handles.splice(0).forEach(h => global.window_manager.disconnect(h));
+  }
+}
+
 function init() {
-  ExtensionUtils.initTranslations();
+  return new Extension();
 }
-
-/* exported enable */
-/* Enables the plugin by adding listeners and icons as necessary */
-function enable() {
-
-  _settings = ExtensionUtils.getSettings();
-  _settings.connect("changed::gap-size", _gapSizeChanged );
-
-  //Main.wm.setCustomKeybindingHandler('maximize', Shell.ActionMode.NORMAL, maximize);
-  let flag = Meta.KeyBindingFlags.IGNORE_AUTOREPEAT;
-  Main.wm.addKeybinding("keybinding-withgaps-maximize",_settings, flag, Shell.ActionMode.NORMAL, () => {
-    maximize();
-  })
-
-  _gapSizeChanged();
-
-}
-
-/* Removes all traces of the listeners and icons that the extension created */
-/* exported disable */
-function disable() {
-  _setting = null;
-  let mode = Shell.ActionMode ? Shell.ActionMode : Shell.KeyBindingMode;
-  //Main.wm.setCustomKeybindingHandler('maximize', Shell.ActionMode.NORMAL, Lang.bind(Main.wm, Main.wm._startSwitcher));
-  Main.wm.removeKeybinding("keybinding-show-popup");
-}
-
-function _gapSizeChanged(){
-  let gapSize = _settings.get_int("gap-size");
-  log("gab size changed"+gapSize.toString());
-}
-
-function maximize()(){
-  let gapSize = _settings.get_int("gap-size");
-  log("maxize with gapsize "+gapSize.toString());
-}
-
-function unmaximaze(){
-  let gapSize = _settings.get_int("gap-size");
-  log("unmaxize with gapsize "+gapSize.toString());
-}
-
-
 
 
