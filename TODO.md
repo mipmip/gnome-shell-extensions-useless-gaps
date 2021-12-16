@@ -1,0 +1,27 @@
+### Version Unknown
+
+- [ ] some basic translation support (dutch)
+- [ ] central place for schema's
+- [ ] add custom schema's
+- [ ] icon
+- [ ] create sub sections inside window manager keys
+- [ ] preferences show/hide description array (v2)
+  - [ ] list found shortcuts with enable-toggle per applications/schema
+- [ ] preferences add shortcuts from other Gnome apps
+  - [ ] use widget like in "auto move windows" preferences
+- [ ] autohide popup
+- [ ] hide when mouse click
+- [ ] localized
+- [ ] configure scope of keybinding app
+- [ ] preferences add shortcuts from other Apps
+  - [ ] using functions
+  - [ ] using json files
+  - [ ] using plugins?
+  - [ ] using plain text
+- [ ] multiple sheets
+- [ ] search filter
+- [ ] preferences detect currently running application and show it's shortcuts.
+  - [ ] inkspace
+  - [ ] vim
+  - [ ] tmux
+  - [ ] readline

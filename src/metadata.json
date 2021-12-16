@@ -1,0 +1,13 @@
+{
+    "name": "Useless Gaps",
+    "uuid": "useless-gaps@pimsnel.com",
+    "url": "https://github.com/mipmip/gnome-shell-extensions-useless-gaps",
+    "description": "Pop-up cheatsheet with currently configured keyboard shortcuts.",
+    "gettext-domain": "useless-gaps",
+    "settings-schema": "org.gnome.shell.extensions.useless-gaps",
+    "version": 1,
+    "shell-version": [
+        "40",
+        "41"
+    ]
+}

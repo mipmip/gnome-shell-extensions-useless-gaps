@@ -1,0 +1,9 @@
+<schemalist>
+  <schema id="org.gnome.shell.extensions.useless-gaps" path="/org/gnome/shell/extensions/useless-gaps/">
+    <key name="gap-size" type="i">
+      <default>20</default>
+      <summary>Gap size between windows</summary>
+      <description>Margin in pixel windows when tiled left or right or maximized.</description>
+    </key>
+</schema>
+</schemalist>

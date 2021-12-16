@@ -1,0 +1,23 @@
+{
+  "name": "gnome-shell-extensions-useless-gaps",
+  "version": "1.0.0",
+  "description": "Useless Gaps is a GNOME Shell Extension that displays currently configured Gnome hotkeys in a popup. The popup is activated with <kbd>Super + S</kbd>.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mipmip/gnome-shell-extensions-useless-gaps.git"
+  },
+  "author": "Pim Snel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mipmip/gnome-shell-extensions-useless-gaps/issues"
+  },
+  "homepage": "https://github.com/mipmip/gnome-shell-extensions-useless-gaps#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^8.1.0"
+  }
+}

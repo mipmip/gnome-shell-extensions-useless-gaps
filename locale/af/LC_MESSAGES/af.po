@@ -1,0 +1,77 @@
+# Afrikaans translations for Shortcuts package
+# Afrikaans messages for Shortcuts.
+# Copyright (C) 2016-2018 Kyle Robbertze <kyle@aims.ac.za>
+# This file is distributed under the same license as the Shortcuts package.
+# Kyle Robbertze, kyle@aims.ac.za, 2016-2018
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Shortcuts 1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-01 09:17+0200\n"
+"PO-Revision-Date: 2018-01-10 15:16+0200\n"
+"Last-Translator: Kyle Robbertze <kyle@aims.ac.za>\n"
+"Language-Team: Afrikaans\n"
+"Language: af\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.9\n"
+
+#: ../src/extension.js:66
+msgid "The super key is the Windows key on most keyboards"
+msgstr "Die super key is die Windows key op mees van klawerborde"
+
+#: ../src/extension.js:83
+#, javascript-format
+msgid "Shortcuts file not found: '%s'"
+msgstr "Leer is nie daar nie: '%s'"
+
+#: ../src/extension.js:90
+#, javascript-format
+msgid "Unable to read file: '%s'"
+msgstr "Kan nie die lêer lees nie: '%s'"
+
+#: ../src/prefs.js:32
+msgid "Custom Shortcuts File"
+msgstr "Persoonlike kortpaaie lêer"
+
+#: ../src/prefs.js:37
+msgid "Select shortcut file"
+msgstr "Kies 'n kortpaaie lêer."
+
+#: ../src/prefs.js:49
+msgid "Show tray icon"
+msgstr "Gebruik ikoon"
+
+#: ../src/schemas/org.gnome.shell.extensions.shortcuts.gschema.xml:6
+msgid "Use an alternative file for shortcut descriptions"
+msgstr "Gebruik 'n verskillende lêer vie kortpaaie beskrywing"
+
+#: ../src/schemas/org.gnome.shell.extensions.shortcuts.gschema.xml:7
+msgid ""
+"If true the shortcut file specified as shortcuts-file will be used for "
+"custom shortcuts."
+msgstr "As hy waar is, sal die kortpaaie lêer in shortcuts-file om "
+"persoonlike kortpaaie gebruik word"
+
+#: ../src/schemas/org.gnome.shell.extensions.shortcuts.gschema.xml:11
+msgid "Alternative file for shortcut descriptions"
+msgstr "Verskillende lêer vir kortpaaie beskrywing"
+
+#: ../src/schemas/org.gnome.shell.extensions.shortcuts.gschema.xml:12
+msgid ""
+"If not empty it points to the shortcut file that will be read for the "
+"shortcut descriptions."
+msgstr "Wys waar die kortpaaie lêer wat sal vir die kortpaaie beskrywing "
+"word is."
+
+#: ../src/schemas/org.gnome.shell.extensions.shortcuts.gschema.xml:16
+msgid "Toggles the icon on the top panel"
+msgstr "Skakle die ikoon op die boonste paneel"
+
+#: ../src/schemas/org.gnome.shell.extensions.shortcuts.gschema.xml:17
+msgid ""
+"If true an icon to activate the extension will be visible on the top pannel."
+msgstr "As waar is, sal 'n ikoon op die boonste paneel wees om die verlenging te aktiveer"
