@@ -1,7 +1,8 @@
 ### Version 1
 
-- initial version
-- preference for gap size
-- override maximize function
-- override tile left/right function
-- initial information and docs
+- [x] initial version
+- [x] preference for gap size
+- [x] override maximize function
+- [ ] override tile left/right function
+- [ ] initial information and docs
+- [ ] disable animation when applying margins
