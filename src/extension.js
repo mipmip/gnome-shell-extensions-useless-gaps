@@ -56,7 +56,6 @@ class Extension {
 
     window.unmaximize(Meta.MaximizeFlags.BOTH);
     window.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
-    window.maximize(Meta.MaximizeFlags.BOTH);
   }
 
   addSplitWindowMargins(window){
