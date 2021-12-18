@@ -81,7 +81,6 @@ const UselessGapsPrefsWidget = new GObject.Class({
     let label_gapsize = new UI.Label('Gap Size')
     this._grid._add(label_gapsize, this._spin);
 
-    //this._settings = this._get_settings();
     _settings.bind("gap-size", this._spin, "value", Gio.SettingsBindFlags.DEFAULT);
   }
 });

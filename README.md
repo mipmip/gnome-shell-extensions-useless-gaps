@@ -1,31 +1,28 @@
 # Useless Gaps
 
-Useless Gaps is a GNOME Shell Extension that displays currently configured
-Gnome hotkeys in a popup. The popup is activated with <kbd>Super + S</kbd>.
+Useless Gaps is a GNOME Shell Extension which for aesthetic purposes adds
+"useless gaps" around windows.
+
+This extension is intended to be used with Gnome's orininal Grid functions.
+These functions are simple, but very useful for most users.
+
+The gaps will appear when a window is Tiled Left <kbd>Super</kbd> +
+<kbd>Left</kbd>, Tiled Right <kbd>Super</kbd> +
+<kbd>Right</kbd> or Maximized <kbd>Super</kbd> +
+<kbd>Up</kbd>.
+
+Better not use this extension together with a specialized tiling extension like
+[Forge](https://extensions.gnome.org/extension/4481/forge/),
+[gTile](https://extensions.gnome.org/extension/28/gtile/) or
+[Tactile](https://extensions.gnome.org/extension/4548/tactile/).
 
 *Only tested with Gnome 40*. It might run correctly with other versions.
 
-Currently it only shows some of the window manager shortcuts. In the future
-versions it should show personally configured shortcuts.
-
 ## Features
 
-- Shows popup with hotkeys of Gnome Shell and Gnome Window Manager
-- Get configured shortcuts from GSettings
-- Works with Gnome 40
-- Transparency optional
-- Set hotkey key binding in preference
-- Choose which hotkeys should be displayed in popup
-
-## Future
-
-- Add more schema's
-- Add shortcuts from non GTK applications
-- Add custom shortcuts
-- Detect current active application to show it's shortcuts
-- Filter shortcuts
-- Colorize sections
-- Themes
+- Gaps size is configurable
+- create useless gaps around maximized windows
+- create useless gaps around left and right split windows
 
 ## Contributing
 
@@ -37,10 +34,7 @@ versions it should show personally configured shortcuts.
 
 ## Credits
 
-The idea of having an up to date hotkey popup window comes from AwesomeWM.
-
-This extension is initially forked from [Shortcuts]
-(https://gitlab.com/paddatrapper/shortcuts-gnome-extension).
+The idea of having useless gaps come from window managers like AwesomeWM and DWM.
 
 ### Install
 

@@ -14,19 +14,11 @@
  * along with Useless Gaps.  If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************/
 
-const Gettext = imports.gettext;
 const ExtensionUtils = imports.misc.extensionUtils;
-const Shell = imports.gi.Shell;
 const Meta = imports.gi.Meta;
-const Main = imports.ui.main;
-
-const Gio = imports.gi.Gio;
 
 const _handles = [];
-
-const _windowids_maximized = {};
 const _windowids_size_change = {};
-let _settings;
 
 class Extension {
 
@@ -56,66 +48,45 @@ class Extension {
   }
 
   addWindowMargins(window){
-    global.log("uselessgaps","addWindowMargins "+window.get_id());
-    global.log("uselessgaps","gapsize "+this.gapSize.toString());
-
     const rects = this.getRectangles(window);
-    const fourthWidth = rects.workspace.w / 4;
-    const fourthHeight = rects.workspace.h / 4;
     const xStart = rects.workspace.x + this.gapSize;
     const yStart = rects.workspace.y + this.gapSize;
     const newWidth = rects.window.w - (this.gapSize*2);
     const newHeight = rects.window.h - (this.gapSize*2);
 
     window.unmaximize(Meta.MaximizeFlags.BOTH);
-    //window.move_frame(false, xStart, yStart);
     window.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
+    window.maximize(Meta.MaximizeFlags.BOTH);
   }
 
   addSplitWindowMargins(window){
-    global.log("uselessgaps","addWindowMargins "+window.get_id());
-    global.log("uselessgaps","gapsize "+this.gapSize.toString());
 
     const rects = this.getRectangles(window);
-    const fourthWidth = rects.workspace.w / 4;
-    const fourthHeight = rects.workspace.h / 4;
     const xStart = rects.window.x + this.gapSize;
     const yStart = rects.window.y + this.gapSize;
     const newWidth = rects.window.w - (this.gapSize*2);
     const newHeight = rects.window.h - (this.gapSize*2);
 
-    global.log("windowx");
-    global.log(rects.window.x);
-
     window.unmaximize(Meta.MaximizeFlags.BOTH);
-    //window.move_frame(false, xStart, yStart);
     window.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
   }
 
 
-  window_manager_size_change(act,change,rectold)
+  window_manager_size_change(act, change, rectold)
   {
     const win = act.meta_window;
-
-    global.log("gettilematch");
-    global.log(win.get_tile_match() );
-    global.log("change");
-    global.log(change );
 
     if (win.window_type !== Meta.WindowType.NORMAL)
       return;
 
     if (change === Meta.SizeChange.MAXIMIZE)
     {
-      global.log("MaximizeFlags");
-      global.log(win.get_maximized() );
       if (win.get_maximized() === Meta.MaximizeFlags.BOTH)
       {
-        global.log("uselessgaps change","=== Meta.MaximizeFlags.BOTH");
+        //  global.log("uselessgaps change","=== Meta.MaximizeFlags.BOTH");
         _windowids_size_change[win.get_id()]="gapmax";
       }
       else if(win.get_maximized() === Meta.MaximizeFlags.VERTICAL){
-        global.log("uselessgaps change","=== Meta.MaximizeFlags.VERTICAL");
         _windowids_size_change[win.get_id()]="gapvert";
 
       }
@@ -124,7 +95,6 @@ class Extension {
   window_manager_size_changed(act)
   {
     const win = act.meta_window;
-    //global.log("uselessgaps","window_manager_size_changed "+win.get_id());
 
     if (win.get_id() in _windowids_size_change) {
       if (_windowids_size_change[win.get_id()]=="gapmax") {
@@ -139,7 +109,6 @@ class Extension {
   }
 
   setGapSize(){
-    global.log("uselessgaps","gapsize changed");
     this.gapSize = this._settings.get_int("gap-size");
   }
 
@@ -160,5 +129,3 @@ class Extension {
 function init() {
   return new Extension();
 }
-
-
