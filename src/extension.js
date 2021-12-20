@@ -61,9 +61,18 @@ class Extension {
   addSplitWindowMargins(window){
 
     const rects = this.getRectangles(window);
-    const xStart = rects.window.x + this.gapSize;
+    let xStart, newWidth;
+
+    if(rects.window.x > 0){
+      xStart = rects.window.x;
+      newWidth = rects.window.w - this.gapSize;
+    }
+    else{
+      xStart = rects.window.x + this.gapSize;
+      newWidth = rects.window.w - (this.gapSize*2);
+    }
+
     const yStart = rects.window.y + this.gapSize;
-    const newWidth = rects.window.w - (this.gapSize*2);
     const newHeight = rects.window.h - (this.gapSize*2);
 
     window.unmaximize(Meta.MaximizeFlags.BOTH);
@@ -121,6 +130,7 @@ class Extension {
   }
 
   disable() {
+    this._settings = null;
     _handles.splice(0).forEach(h => global.window_manager.disconnect(h));
   }
 }
