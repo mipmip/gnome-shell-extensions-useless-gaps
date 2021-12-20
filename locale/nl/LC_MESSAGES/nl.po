@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2018 Kyle Robbertze <kyle@aims.ac.za>
+# This file is distributed under the same license as the Useless Gaps package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-01 11:26+0200\n"
+"PO-Revision-Date: 2021-12-20 14:40+0100\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: nl\n"
+
+#: ../src/extension.js:66
+msgid "The super key is the Windows key on most keyboards"
+msgstr "De Super-toets is doorgaans de Windows-toets"
+
+#: ../src/extension.js:83
+#, javascript-format
+msgid "Useless Gaps file not found: '%s'"
+msgstr "Useless Gaps-bestand niet aangetroffen: ‘%s’"
+
+#: ../src/extension.js:90
+#, javascript-format
+msgid "Unable to read file: '%s'"
+msgstr "Het bestand kan niet worden uitgelezen: ‘%s’"
+
+#: ../src/prefs.js:32
+msgid "Custom Useless Gaps File"
+msgstr "Aangepast Useless Gaps-bestand"
+
+#: ../src/prefs.js:37
+msgid "Select shortcut file"
+msgstr "Kies een sneltoetsbestand"
+
+#: ../src/prefs.js:49
+msgid "Show tray icon"
+msgstr "Systeemvakpictogram tonen"
+
+#: ../src/schemas/org.gnome.shell.extensions.useless-gaps.gschema.xml:6
+msgid "Use an alternative file for shortcut descriptions"
+msgstr "Alternatief bestand gebruiken voor sneltoetsomschrijvingen"
+
+#: ../src/schemas/org.gnome.shell.extensions.useless-gaps.gschema.xml:7
+msgid ""
+"If true the shortcut file specified as useless-gaps-file will be used for "
+"custom useless-gaps."
+msgstr ""
+"Schakel in om het opgegeven sneltoetsbestand te gebruiken bij aangepaste "
+"useless-gaps."
+
+#: ../src/schemas/org.gnome.shell.extensions.useless-gaps.gschema.xml:11
+msgid "Alternative file for shortcut descriptions"
+msgstr "Alternatief bestand gebruiken voor sneltoetsomschrijvingen"
+
+#: ../src/schemas/org.gnome.shell.extensions.useless-gaps.gschema.xml:12
+msgid ""
+"If not empty it points to the shortcut file that will be read for the "
+"shortcut descriptions."
+msgstr ""
+"Geef op om een bestand te kiezen dat wordt gebruikt voor het uitlezen van "
+"sneltoetsomschrijvingen."
+
+#: ../src/schemas/org.gnome.shell.extensions.useless-gaps.gschema.xml:16
+msgid "Toggles the icon on the top panel"
+msgstr "Pictogram op bovenbalk tonen/verbergen"
+
+#: ../src/schemas/org.gnome.shell.extensions.useless-gaps.gschema.xml:17
+msgid ""
+"If true an icon to activate the extension will be visible on the top pannel."
+msgstr "Schakel in om het uitbreidingspictogram te tonen op de bovenbalk."
