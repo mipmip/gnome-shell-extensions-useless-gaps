@@ -21,8 +21,8 @@ Better not use this extension together with a specialized tiling extension like
 ## Features
 
 - Gaps size is configurable
-- create useless gaps around maximized windows
-- create useless gaps around left and right split windows
+- Create useless gaps around maximized windows
+- Create useless gaps around left and right split windows
 
 ## Contributing
 
@@ -34,7 +34,15 @@ Better not use this extension together with a specialized tiling extension like
 
 ## Credits
 
-The idea of having useless gaps come from window managers like AwesomeWM and DWM.
+The idea of having useless gaps come from window managers like
+[AwesomeWM](awesomewm.org) and
+[DWM](https://dwm.suckless.org/patches/uselessgap/).
+
+The extension
+[maximize-to-empty-workspace](https://extensions.gnome.org/extension/3100/maximize-to-empty-workspace/)
+served as great example how to listen to and act on maximized signals from
+mutter.
+
 
 ### Install
 

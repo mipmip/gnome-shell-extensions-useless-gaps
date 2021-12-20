@@ -11,3 +11,7 @@
 ## Version 2
 - fix right tile wrong gab size
 - review instructions
+
+## Version 3
+- Translatable
+- Dutch translations
