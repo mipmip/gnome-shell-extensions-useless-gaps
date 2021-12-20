@@ -19,6 +19,7 @@ const Gio = imports.gi.Gio;
 const Gtk = imports.gi.Gtk;
 
 const Gettext = imports.gettext;
+//const _ = imports.gettext.domain(Me.metadata['gettext-domain']).gettext;
 const _ = Gettext.gettext;
 
 const ExtensionUtils = imports.misc.extensionUtils;
@@ -71,14 +72,14 @@ const UselessGapsPrefsWidget = new GObject.Class({
 
     this.set_child(new UI.Frame(this._grid));
 
-    let mainSettingsLabel = new UI.LargeLabel("Main Settings");
+    let mainSettingsLabel = new UI.LargeLabel(_("Main Settings"));
     this._grid._add(mainSettingsLabel)
 
     this._spin = new Gtk.SpinButton;
     this._spin.set_range(0, 300);
     this._spin.set_increments(1, 1);
 
-    let label_gapsize = new UI.Label('Gap Size')
+    let label_gapsize = new UI.Label(_("Gap Size"))
     this._grid._add(label_gapsize, this._spin);
 
     _settings.bind("gap-size", this._spin, "value", Gio.SettingsBindFlags.DEFAULT);

@@ -9,11 +9,23 @@ fi
 
 NAME=useless-gaps\@pimsnel.com
 
-function compile-translations {
-    echo 'Compiling translations...'
-    for po in locale/*/LC_MESSAGES/*.po; do
-        msgfmt -cv -o ${po%.po}.mo $po;
-    done
+#function compile-translations {
+#    echo 'Compiling translations...'
+#    for po in po/*/LC_MESSAGES/*.po; do
+#        msgfmt -cv -o ${po%.po}.mo $po;
+#    done
+#}
+
+
+
+function pack-extension {
+echo "Packing extension..."
+gnome-extensions pack src \
+  --force \
+  --podir="../po" \
+  --extra-source="ui.js" \
+  --extra-source="../LICENSE" \
+  --extra-source="../CHANGELOG.md"
 }
 
 function compile-preferences {
@@ -28,7 +40,7 @@ function compile-preferences {
 function make-local-install {
     DEST=~/.local/share/gnome-shell/extensions/$NAME
 
-    compile-translations
+    #compile-translations
     compile-preferences
 
     echo 'Installing...'
@@ -37,8 +49,10 @@ function make-local-install {
     fi
     cp -r src/* locale $DEST/
 
-    busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval s 'Meta.restart("Restarting…")'
+}
 
+function restart-shell {
+    busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval s 'Meta.restart("Restarting…")'
     echo 'Done'
 }
 
@@ -49,7 +63,7 @@ function make-zip {
 
     rm -fv "$NAME".zip
     mkdir build
-    compile-translations
+    #compile-translations
     compile-preferences
     echo 'Coping files...'
     cp -r LICENSE README.md src/* locale build/
@@ -72,11 +86,14 @@ function usage() {
 
 case "$1" in
     "local-install" )
-        make-local-install
+        #make-local-install
+        pack-extension
+        gnome-extensions install --force $NAME.shell-extension.zip && restart-shell
         ;;
 
     "zip" )
-        make-zip
+        #make-zip
+        pack-extension
         ;;
 
     * )

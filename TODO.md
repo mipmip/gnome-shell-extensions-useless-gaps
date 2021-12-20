@@ -1,5 +1,5 @@
 ### Version Unknown
 
+- [ ] translations
+- [ ] test in 3.38, 3.36, 4.1
 - [ ] disable animation when applying margins
-- [ ] in gnome listing
-- [ ] try remaximize state
