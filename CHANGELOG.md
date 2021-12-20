@@ -1,7 +1,13 @@
-### Version 1
+# CHANGELOG
+
+## Version 1
 
 - initial version
 - preference for gap size
 - override maximize function
 - override tile left/right function
 - initial information and docs
+
+## Version 2
+- fix right tile wrong gab size
+- review instructions

@@ -54,6 +54,7 @@ function make-zip {
     echo 'Coping files...'
     cp -r LICENSE README.md src/* locale build/
     find build -name "*.po*" -delete
+    find build -name "LINGUAS" -delete
     echo 'Creating archive..'
     cd build
     zip -r ../"$NAME".zip ./*
