@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Version 4
+- Cleanup
+
 ## Version 3
 - Translatable
 - Dutch translations
