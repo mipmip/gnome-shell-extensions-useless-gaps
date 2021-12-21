@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## Version 3
+- Translatable
+- Dutch translations
+- Compatible with 3.38 and 3.36
+
+## Version 2
+- fix right tile wrong gab size
+- review instructions
+
 ## Version 1
 
 - initial version
@@ -8,10 +17,3 @@
 - override tile left/right function
 - initial information and docs
 
-## Version 2
-- fix right tile wrong gab size
-- review instructions
-
-## Version 3
-- Translatable
-- Dutch translations

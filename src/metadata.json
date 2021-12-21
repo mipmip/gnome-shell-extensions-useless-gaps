@@ -7,6 +7,8 @@
     "settings-schema": "org.gnome.shell.extensions.useless-gaps",
     "version": 3,
     "shell-version": [
+        "3.36",
+        "3.38",
         "40",
         "41"
     ]
