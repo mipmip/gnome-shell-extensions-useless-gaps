@@ -114,9 +114,7 @@ else{
 		}
 	)
 
-	function init(){
-		log("joeujoe2");
-	}
+	function init(){}
 
 
 }
