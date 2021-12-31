@@ -1,10 +1,10 @@
 # Useless Gaps
 
-Useless Gaps is a GNOME Shell Extension which for aesthetic purposes adds
+Useless Gaps is a GNOME Shell Extension which for aesthetic purposes, adds
 "useless gaps" around windows.
 
-This extension is intended to be used with Gnome's orininal Grid functions.
-These functions are simple, but very useful for most users.
+This extension is intended to be used with Gnome's original Grid functions.
+These functions are simple but very useful for most users.
 
 The gaps will appear when a window is Tiled Left <kbd>Super</kbd> +
 <kbd>Left</kbd>, Tiled Right <kbd>Super</kbd> +
@@ -16,7 +16,7 @@ Better not use this extension together with a specialized tiling extension like
 [gTile](https://extensions.gnome.org/extension/28/gtile/) or
 [Tactile](https://extensions.gnome.org/extension/4548/tactile/).
 
-In Gnome 3.38 the gaps size can only be set with dconf.
+In Gnome 3.38, the size of the gap can only be set with dconf.
 
 ```
 dconf write /org/gnome/shell/extensions/useless-gaps/gap-size 25
@@ -44,7 +44,7 @@ The idea of having useless gaps come from window managers like
 
 The extension
 [maximize-to-empty-workspace](https://extensions.gnome.org/extension/3100/maximize-to-empty-workspace/)
-served as great example how to listen to and act on maximized signals from
+served as a great example of how to listen to and act on maximized signals from
 mutter.
 
 
