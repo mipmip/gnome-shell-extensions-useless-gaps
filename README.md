@@ -46,9 +46,3 @@ The extension
 [maximize-to-empty-workspace](https://extensions.gnome.org/extension/3100/maximize-to-empty-workspace/)
 served as great example how to listen to and act on maximized signals from
 mutter.
-
-
-### Install
-
-You may need to restart GNOME (Alt + F2, r) before you see Shortcuts in your
-list of extensions

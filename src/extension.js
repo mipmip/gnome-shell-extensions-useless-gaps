@@ -89,20 +89,51 @@ class Extension {
 
     if (change === Meta.SizeChange.MAXIMIZE)
     {
-      if (win.get_maximized() === Meta.MaximizeFlags.BOTH)
-      {
-        //  global.log("uselessgaps change","=== Meta.MaximizeFlags.BOTH");
-        _windowids_size_change[win.get_id()]="gapmax";
-      }
-      else if(win.get_maximized() === Meta.MaximizeFlags.VERTICAL){
-        _windowids_size_change[win.get_id()]="gapvert";
-
-      }
+      this.check_and_mark_maximized(win);
     }
   }
+
+  window_created(win)
+  {
+    const win = act1;
+    //let win = global.display.focus_window;
+    if (win == null) {
+      return;
+    }
+    if (win.window_type !== Meta.WindowType.NORMAL){
+      return;
+    }
+
+    const rects = this.getRectangles(win);
+
+    global.log("reiszing");
+    global.log(JSON.stringify(rects));
+    global.log(win.get_description());
+    //this.check_and_mark_maximized(win);
+    //this.window_do_resize(win);
+  }
+
+
   window_manager_size_changed(act)
   {
     const win = act.meta_window;
+    this.window_do_resize(win);
+  }
+
+  check_and_mark_maximized(win){
+    global.log(win.get_maximized() );
+    if (win.get_maximized() === Meta.MaximizeFlags.BOTH)
+    {
+      global.log("hallo:");
+      _windowids_size_change[win.get_id()]="gapmax";
+    }
+    else if(win.get_maximized() === Meta.MaximizeFlags.VERTICAL){
+      global.log("hallo:22");
+      _windowids_size_change[win.get_id()]="gapvert";
+    }
+  }
+
+  window_do_resize(win){
 
     if (win.get_id() in _windowids_size_change) {
       if (_windowids_size_change[win.get_id()]=="gapmax") {
@@ -114,6 +145,7 @@ class Extension {
         this.addSplitWindowMargins(win);
       }
     }
+
   }
 
   setGapSize(){
@@ -125,6 +157,7 @@ class Extension {
     this._settings.connect("changed::gap-size", ()=>{this.setGapSize();} );
     this.setGapSize();
 
+    _handles.push(global.display.connect('window-created', (act1, act) => {this.window_created(act);}));
     _handles.push(global.window_manager.connect('size-changed', (_, act) => {this.window_manager_size_changed(act);}));
     _handles.push(global.window_manager.connect('size-change', (_, act, change,rectold) => {this.window_manager_size_change(act,change,rectold);}));
   }
