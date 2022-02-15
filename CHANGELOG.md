@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Version 5
+- Add gaps when application starts maximized
+
 ## Version 4
 - Cleanup
 
