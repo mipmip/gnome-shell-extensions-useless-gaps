@@ -45,46 +45,26 @@ class Extension {
         h: monitorWorkArea.height,
         w: monitorWorkArea.width,
       },
+      newBoth: {
+        x: monitorWorkArea.x + this.gapSize,
+        y: monitorWorkArea.y + this.gapSize,
+        h: monitorWorkArea.height - (this.gapSize*2),
+        w: monitorWorkArea.width - (this.gapSize*2),
+      }
     };
   }
 
-  addWindowMargins(win){
-    const rects = this.getRectangles(win);
+  addWindowMargins(window){
+    const rects = this.getRectangles(window);
+    /*
     const xStart = rects.workspace.x + this.gapSize;
     const yStart = rects.workspace.y + this.gapSize;
     const newWidth = rects.window.w - (this.gapSize*2);
     const newHeight = rects.window.h - (this.gapSize*2);
-
-    global.log(JSON.stringify(rects));
-
-    win.maximize(Meta.MaximizeFlags.BOTH);
-    //win.unmaximize(Meta.MaximizeFlags.BOTH);
-
-    GLib.timeout_add(GLib.PRIORITY_DEFAULT, 500, () => {
-      if (win.get_maximized()){
-        global.log('unmaximize');
-      }
-
-      win.unmaximize(win.get_maximized());
-      global.log('2: new margins window-created', win.title, newHeight);
-      win.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
-      //win.maximize(Meta.MaximizeFlags.BOTH);
-      //win.move_resize_frame(false, xStart, yStart, 300, 300);
-    });
-      /*
-    let sourceId = GLib.timeout_add_seconds(
-      GLib.PRIORITY_DEFAULT,
-      5,
-      ()=>{
-        global.log('2: new margins window-created', win.title);
-        win.move_resize_frame(false, xStart, yStart, 300, 300)
-      }
-    );
     */
-    global.log('new margins window-created', win.title);
-    global.log('newHeight', newHeight);
-    global.log('newWidth', newWidth);
-    global.log('gapSize', this.gapSize);
+
+    window.unmaximize(Meta.MaximizeFlags.BOTH);
+    window.move_resize_frame(false, rects.newBoth.x, rects.newBoth.y, rects.newBoth.w, rects.newBoth.h);
   }
 
   addSplitWindowMargins(window){
@@ -132,18 +112,11 @@ class Extension {
 
     const rects = this.getRectangles(win);
 
-    const xStart = rects.workspace.x + this.gapSize;
-    const yStart = rects.workspace.y + this.gapSize;
-    const newWidth = rects.workspace.w - (this.gapSize*2);
-    const newHeight = rects.workspace.h - (this.gapSize*2);
-
-    if(rects.window.h >= newHeight && rects.window.w >= newWidth){
-
+    if(rects.window.h >= rects.newBoth.h && rects.window.w >= rects.newBoth.w){
       win.maximize(Meta.MaximizeFlags.BOTH);
-
       GLib.timeout_add(GLib.PRIORITY_DEFAULT, 100, () => {
         win.unmaximize(win.get_maximized());
-        win.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
+        win.move_resize_frame(false, rects.newBoth.x, rects.newBoth.y, rects.newBoth.w, rects.newBoth.h);
       });
     }
   }
