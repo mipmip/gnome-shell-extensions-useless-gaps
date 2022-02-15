@@ -39,30 +39,31 @@ class Extension {
         h: rect.height,
         w: rect.width,
       },
-      workspace: {
+      /*      workspace: {
         x: monitorWorkArea.x,
         y: monitorWorkArea.y,
         h: monitorWorkArea.height,
         w: monitorWorkArea.width,
       },
+      */
       newBoth: {
         x: monitorWorkArea.x + this.gapSize,
         y: monitorWorkArea.y + this.gapSize,
-        h: monitorWorkArea.height - (this.gapSize*2),
-        w: monitorWorkArea.width - (this.gapSize*2),
+        h: monitorWorkArea.height - (this.gapSize * 2),
+        w: monitorWorkArea.width - (this.gapSize * 2),
+      },
+      newVert: {
+        xleft: monitorWorkArea.x + this.gapSize,
+        xright: (monitorWorkArea.width / 2 ) + (this.gapSize / 2),
+        y: monitorWorkArea.y + this.gapSize,
+        h: monitorWorkArea.height - (this.gapSize * 2),
+        w: (monitorWorkArea.width / 2) - (this.gapSize * 1.5),
       }
     };
   }
 
   addWindowMargins(window){
     const rects = this.getRectangles(window);
-    /*
-    const xStart = rects.workspace.x + this.gapSize;
-    const yStart = rects.workspace.y + this.gapSize;
-    const newWidth = rects.window.w - (this.gapSize*2);
-    const newHeight = rects.window.h - (this.gapSize*2);
-    */
-
     window.unmaximize(Meta.MaximizeFlags.BOTH);
     window.move_resize_frame(false, rects.newBoth.x, rects.newBoth.y, rects.newBoth.w, rects.newBoth.h);
   }
@@ -70,22 +71,17 @@ class Extension {
   addSplitWindowMargins(window){
 
     const rects = this.getRectangles(window);
-    let xStart, newWidth;
+    let xStart
 
-    if(rects.window.x > 0){
-      xStart = rects.window.x;
-      newWidth = rects.window.w - this.gapSize;
+    if(rects.window.x <= this.gapSize){
+      xStart = rects.newVert.xleft;
     }
     else{
-      xStart = rects.window.x + this.gapSize;
-      newWidth = rects.window.w - (this.gapSize*2);
+      xStart = rects.newVert.xright;
     }
 
-    const yStart = rects.window.y + this.gapSize;
-    const newHeight = rects.window.h - (this.gapSize*2);
-
     window.unmaximize(Meta.MaximizeFlags.BOTH);
-    window.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
+    window.move_resize_frame(false, xStart, rects.newVert.y, rects.newVert.w, rects.newVert.h);
   }
 
   window_manager_size_change(act, change, rectold)
@@ -114,13 +110,16 @@ class Extension {
 
     if(rects.window.h >= rects.newBoth.h && rects.window.w >= rects.newBoth.w){
       win.maximize(Meta.MaximizeFlags.BOTH);
-      GLib.timeout_add(GLib.PRIORITY_DEFAULT, 100, () => {
+
+      GLib.timeout_add(GLib.PRIORITY_DEFAULT, 500, () => {
         win.unmaximize(win.get_maximized());
         win.move_resize_frame(false, rects.newBoth.x, rects.newBoth.y, rects.newBoth.w, rects.newBoth.h);
       });
     }
+    else if(rects.window.h >= rects.newBoth.h && rects.window.y <= rects.newBoth.y){
+      this.addSplitWindowMargins(win);
+    }
   }
-
 
   window_manager_size_changed(act)
   {
@@ -150,7 +149,6 @@ class Extension {
         this.addSplitWindowMargins(win);
       }
     }
-
   }
 
   setGapSize(){
