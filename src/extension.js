@@ -16,6 +16,7 @@
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Meta = imports.gi.Meta;
+const GLib = imports.gi.GLib;
 
 const _handles = [];
 const _windowids_size_change = {};
@@ -47,15 +48,29 @@ class Extension {
     };
   }
 
-  addWindowMargins(window){
-    const rects = this.getRectangles(window);
+  addWindowMargins(win){
+    const rects = this.getRectangles(win);
+    global.log(JSON.stringify(rects));
     const xStart = rects.workspace.x + this.gapSize;
     const yStart = rects.workspace.y + this.gapSize;
     const newWidth = rects.window.w - (this.gapSize*2);
     const newHeight = rects.window.h - (this.gapSize*2);
 
-    window.unmaximize(Meta.MaximizeFlags.BOTH);
-    window.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
+    win.unmaximize(Meta.MaximizeFlags.BOTH);
+
+    /*
+    GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
+      win.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
+      //metaWindow.move_resize_frame(false, x, y, width, height);
+      return GLib.SOURCE_REMOVE;
+    });
+    */
+
+    win.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
+    global.log('new margins window-created', win.title);
+    global.log('newHeight', newHeight);
+    global.log('newWidth', newWidth);
+    global.log('gapSize', this.gapSize);
   }
 
   addSplitWindowMargins(window){
@@ -79,7 +94,6 @@ class Extension {
     window.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
   }
 
-
   window_manager_size_change(act, change, rectold)
   {
     const win = act.meta_window;
@@ -95,7 +109,7 @@ class Extension {
 
   window_created(win)
   {
-    const win = act1;
+    //const win = act1;
     //let win = global.display.focus_window;
     if (win == null) {
       return;
@@ -106,11 +120,18 @@ class Extension {
 
     const rects = this.getRectangles(win);
 
-    global.log("reiszing");
-    global.log(JSON.stringify(rects));
-    global.log(win.get_description());
+    //global.log(JSON.stringify(rects));
+
+    global.log(rects.window.h);
+    global.log(rects.workspace.h);
+
+    if(rects.window.h === rects.workspace.h && rects.window.w === rects.workspace.w){
+      global.log("reiszing");
+      _windowids_size_change[win.get_id()]="gapmax";
+      this.window_do_resize(win);
+    }
+
     //this.check_and_mark_maximized(win);
-    //this.window_do_resize(win);
   }
 
 
@@ -121,14 +142,12 @@ class Extension {
   }
 
   check_and_mark_maximized(win){
-    global.log(win.get_maximized() );
+    //global.log(win.get_maximized() );
     if (win.get_maximized() === Meta.MaximizeFlags.BOTH)
     {
-      global.log("hallo:");
       _windowids_size_change[win.get_id()]="gapmax";
     }
     else if(win.get_maximized() === Meta.MaximizeFlags.VERTICAL){
-      global.log("hallo:22");
       _windowids_size_change[win.get_id()]="gapvert";
     }
   }
