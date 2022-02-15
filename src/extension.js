@@ -50,23 +50,37 @@ class Extension {
 
   addWindowMargins(win){
     const rects = this.getRectangles(win);
-    global.log(JSON.stringify(rects));
     const xStart = rects.workspace.x + this.gapSize;
     const yStart = rects.workspace.y + this.gapSize;
     const newWidth = rects.window.w - (this.gapSize*2);
     const newHeight = rects.window.h - (this.gapSize*2);
 
-    win.unmaximize(Meta.MaximizeFlags.BOTH);
+    global.log(JSON.stringify(rects));
 
-    /*
-    GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
+    win.maximize(Meta.MaximizeFlags.BOTH);
+    //win.unmaximize(Meta.MaximizeFlags.BOTH);
+
+    GLib.timeout_add(GLib.PRIORITY_DEFAULT, 500, () => {
+      if (win.get_maximized()){
+        global.log('unmaximize');
+      }
+
+      win.unmaximize(win.get_maximized());
+      global.log('2: new margins window-created', win.title, newHeight);
       win.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
-      //metaWindow.move_resize_frame(false, x, y, width, height);
-      return GLib.SOURCE_REMOVE;
+      //win.maximize(Meta.MaximizeFlags.BOTH);
+      //win.move_resize_frame(false, xStart, yStart, 300, 300);
     });
+      /*
+    let sourceId = GLib.timeout_add_seconds(
+      GLib.PRIORITY_DEFAULT,
+      5,
+      ()=>{
+        global.log('2: new margins window-created', win.title);
+        win.move_resize_frame(false, xStart, yStart, 300, 300)
+      }
+    );
     */
-
-    win.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
     global.log('new margins window-created', win.title);
     global.log('newHeight', newHeight);
     global.log('newWidth', newWidth);
@@ -109,8 +123,6 @@ class Extension {
 
   window_created(win)
   {
-    //const win = act1;
-    //let win = global.display.focus_window;
     if (win == null) {
       return;
     }
@@ -120,18 +132,20 @@ class Extension {
 
     const rects = this.getRectangles(win);
 
-    //global.log(JSON.stringify(rects));
+    const xStart = rects.workspace.x + this.gapSize;
+    const yStart = rects.workspace.y + this.gapSize;
+    const newWidth = rects.workspace.w - (this.gapSize*2);
+    const newHeight = rects.workspace.h - (this.gapSize*2);
 
-    global.log(rects.window.h);
-    global.log(rects.workspace.h);
+    if(rects.window.h >= newHeight && rects.window.w >= newWidth){
 
-    if(rects.window.h === rects.workspace.h && rects.window.w === rects.workspace.w){
-      global.log("reiszing");
-      _windowids_size_change[win.get_id()]="gapmax";
-      this.window_do_resize(win);
+      win.maximize(Meta.MaximizeFlags.BOTH);
+
+      GLib.timeout_add(GLib.PRIORITY_DEFAULT, 100, () => {
+        win.unmaximize(win.get_maximized());
+        win.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
+      });
     }
-
-    //this.check_and_mark_maximized(win);
   }
 
 
@@ -142,7 +156,6 @@ class Extension {
   }
 
   check_and_mark_maximized(win){
-    //global.log(win.get_maximized() );
     if (win.get_maximized() === Meta.MaximizeFlags.BOTH)
     {
       _windowids_size_change[win.get_id()]="gapmax";
@@ -176,7 +189,7 @@ class Extension {
     this._settings.connect("changed::gap-size", ()=>{this.setGapSize();} );
     this.setGapSize();
 
-    _handles.push(global.display.connect('window-created', (act1, act) => {this.window_created(act);}));
+    _handles.push(global.display.connect('window-created', (_, act) => {this.window_created(act);}));
     _handles.push(global.window_manager.connect('size-changed', (_, act) => {this.window_manager_size_changed(act);}));
     _handles.push(global.window_manager.connect('size-change', (_, act, change,rectold) => {this.window_manager_size_change(act,change,rectold);}));
   }
