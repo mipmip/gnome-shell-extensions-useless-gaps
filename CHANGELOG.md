@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Version 6
+- Fix occasional crash with maximized windows (e.g. telegram showing an image full screen)
+
 ## Version 5
 - Add gaps when application starts maximized
 
