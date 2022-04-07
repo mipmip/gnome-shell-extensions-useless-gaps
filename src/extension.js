@@ -54,8 +54,10 @@ class Extension {
     const newWidth = rects.window.w - (this.gapSize*2);
     const newHeight = rects.window.h - (this.gapSize*2);
 
-    window.unmaximize(Meta.MaximizeFlags.BOTH);
-    window.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
+    if (window.get_maximized() === Meta.MaximizeFlags.BOTH){
+      window.unmaximize(Meta.MaximizeFlags.BOTH);
+      window.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
+    }
   }
 
   addSplitWindowMargins(window){
