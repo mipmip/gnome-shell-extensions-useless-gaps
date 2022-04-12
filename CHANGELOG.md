@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Version 7
+- Support Gnome 42 (thanks https://github.com/logan-connolly)
+
 ## Version 6
 - Fix occasional crash with maximized windows (e.g. telegram showing an image full screen)
 
