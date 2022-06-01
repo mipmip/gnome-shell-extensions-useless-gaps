@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 8
+- Add option to skip gap effect for maximized windows
+- Fix left gapsize on second monitors
+
 ## Version 7
 - Support Gnome 42 (thanks https://github.com/logan-connolly)
 
