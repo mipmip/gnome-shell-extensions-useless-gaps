@@ -65,13 +65,15 @@ class Extension {
     const rects = this.getRectangles(window);
     let xStart, newWidth;
 
-    if(rects.window.x > 0){
-      xStart = rects.window.x;
-      newWidth = rects.window.w - this.gapSize;
-    }
-    else{
+    //left window
+    if(rects.workspace.x === rects.window.x){
       xStart = rects.window.x + this.gapSize;
       newWidth = rects.window.w - (this.gapSize*2);
+    }
+    //right window
+    else{
+      xStart = rects.window.x;
+      newWidth = rects.window.w - this.gapSize;
     }
 
     const yStart = rects.window.y + this.gapSize;
