@@ -102,6 +102,20 @@ var Frame = GObject.registerClass({
   }
 });
 
+/* exported Check */
+var Check = GObject.registerClass({
+  GTypeName: 'Gjs_%s_UI_Check'.format(Uuid),
+}, class Check extends Gtk.CheckButton {
+  _init(x, y) {
+    super._init({
+      label: x,
+      hexpand: true,
+      halign: Gtk.Align.START,
+      tooltip_text: y ? y : '',
+    });
+  }
+});
+
 /* exported Label */
 var Label = GObject.registerClass({
   GTypeName: 'Gjs_%s_UI_Label'.format(Uuid),

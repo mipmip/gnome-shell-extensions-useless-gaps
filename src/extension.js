@@ -107,7 +107,7 @@ class Extension {
     const win = act.meta_window;
 
     if (win.get_id() in _windowids_size_change) {
-      if (_windowids_size_change[win.get_id()]=="gapmax") {
+      if (!this.noGapsForMaximizedWindows && _windowids_size_change[win.get_id()]=="gapmax") {
         delete _windowids_size_change[win.get_id()];
         this.addWindowMargins(win);
       }
@@ -118,14 +118,16 @@ class Extension {
     }
   }
 
-  setGapSize(){
+  initSettings(){
     this.gapSize = this._settings.get_int("gap-size");
+    this.noGapsForMaximizedWindows = this._settings.get_boolean("no-gap-when-maximized");
   }
 
   enable() {
     this._settings = ExtensionUtils.getSettings();
-    this._settings.connect("changed::gap-size", ()=>{this.setGapSize();} );
-    this.setGapSize();
+    this._settings.connect("changed::gap-size", ()=>{this.initSettings();} );
+    this._settings.connect("changed::no-gap-when-maximized", ()=>{this.initSettings();} );
+    this.initSettings();
 
     _handles.push(global.window_manager.connect('size-changed', (_, act) => {this.window_manager_size_changed(act);}));
     _handles.push(global.window_manager.connect('size-change', (_, act, change,rectold) => {this.window_manager_size_change(act,change,rectold);}));
