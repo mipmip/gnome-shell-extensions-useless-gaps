@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Version 9
+- support Gnome 43
+
 ## Version 8
 - Add option to skip gap effect for maximized windows
 - Fix left gapsize on second monitors
