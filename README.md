@@ -1,5 +1,7 @@
 # Useless Gaps
 
+https://user-images.githubusercontent.com/658612/199604411-f50fc915-ce67-432e-bdec-50d7eec8a9fb.mp4
+
 Useless Gaps is a GNOME Shell Extension which for aesthetic purposes, adds
 "useless gaps" around windows.
 
