@@ -5,6 +5,8 @@ https://user-images.githubusercontent.com/658612/199604411-f50fc915-ce67-432e-bd
 Useless Gaps is a GNOME Shell Extension which for aesthetic purposes, adds
 "useless gaps" around windows.
 
+[<img src="./get-it-on-ego.png" height="100">](https://extensions.gnome.org/extension/4684/useless-gaps/)
+
 This extension is intended to be used with Gnome's original Grid functions.
 These functions are simple but very useful for most users.
 

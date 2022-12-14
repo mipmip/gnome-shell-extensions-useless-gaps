@@ -5,3 +5,5 @@ gschemas.compiled
 *.mo
 *.zip
 node_modules
+.temp.html
+.temp.seed
