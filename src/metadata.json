@@ -5,10 +5,8 @@
     "description": "For aesthetic purposes adds useless gaps around tiled and maximized windows",
     "gettext-domain": "useless-gaps",
     "settings-schema": "org.gnome.shell.extensions.useless-gaps",
-    "version": 9,
+    "version": 10,
     "shell-version": [
-        "3.36",
-        "3.38",
         "40",
         "41",
         "42",

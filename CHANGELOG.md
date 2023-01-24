@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 10
+- add custom margins
+- some cleanups
+
 ## Version 9
 - support Gnome 43
 

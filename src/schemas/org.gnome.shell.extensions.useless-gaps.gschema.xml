@@ -10,5 +10,29 @@
       <summary>Don't add gap when windows are maximized</summary>
       <description>If set only tiles windows get a gap.</description>
     </key>
+    <key name="margin-top" type="i">
+      <default>0</default>
+      <summary>Margin top</summary>
+      <description>Margin top</description>
+    </key>
+
+    <key name="margin-bottom" type="i">
+      <default>0</default>
+      <summary>Margin bottom</summary>
+      <description>Margin bottom</description>
+    </key>
+
+    <key name="margin-left" type="i">
+      <default>0</default>
+      <summary>Margin left</summary>
+      <description>Margin left</description>
+    </key>
+
+    <key name="margin-right" type="i">
+      <default>0</default>
+      <summary>Margin right</summary>
+      <description>Margin right</description>
+    </key>
+
   </schema>
 </schemalist>

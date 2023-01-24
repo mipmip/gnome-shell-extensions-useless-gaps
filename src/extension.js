@@ -49,10 +49,13 @@ class Extension {
 
   addWindowMargins(window){
     const rects = this.getRectangles(window);
-    const xStart = rects.workspace.x + this.gapSize;
-    const yStart = rects.workspace.y + this.gapSize;
-    const newWidth = rects.window.w - (this.gapSize*2);
-    const newHeight = rects.window.h - (this.gapSize*2);
+
+    const newWidth = rects.window.w - (this.gapSize*2) - this.marginLeft - this.marginRight;
+    const newHeight = rects.window.h - (this.gapSize*2) - this.marginTop - this.marginBottom;
+
+    const xStart = this.marginLeft + rects.workspace.x + this.gapSize;
+    const yStart = this.marginTop + rects.workspace.y + this.gapSize;
+
 
     if (window.get_maximized() === Meta.MaximizeFlags.BOTH){
       window.unmaximize(Meta.MaximizeFlags.BOTH);
@@ -63,21 +66,21 @@ class Extension {
   addSplitWindowMargins(window){
 
     const rects = this.getRectangles(window);
-    let xStart, newWidth;
 
-    //left window
+    let yStart = this.marginTop + rects.workspace.y + this.gapSize;
+    let newHeight = rects.window.h - (this.gapSize*2) - this.marginTop - this.marginBottom;
+
+    let xStart;
+    let newWidth = rects.window.w - (this.gapSize*3/2) - (this.marginLeft/2) - (this.marginRight/2);
+
+    // LEFT WINDOW
     if(rects.workspace.x === rects.window.x){
-      xStart = rects.window.x + this.gapSize;
-      newWidth = rects.window.w - (this.gapSize*2);
+      xStart = this.marginLeft + this.gapSize + rects.window.x;
     }
-    //right window
+    // RIGHT WINDOW
     else{
-      xStart = rects.window.x;
-      newWidth = rects.window.w - this.gapSize;
+      xStart = this.marginLeft + this.gapSize + newWidth + this.gapSize;
     }
-
-    const yStart = rects.window.y + this.gapSize;
-    const newHeight = rects.window.h - (this.gapSize*2);
 
     window.unmaximize(Meta.MaximizeFlags.BOTH);
     window.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
@@ -123,12 +126,20 @@ class Extension {
   initSettings(){
     this.gapSize = this._settings.get_int("gap-size");
     this.noGapsForMaximizedWindows = this._settings.get_boolean("no-gap-when-maximized");
+    this.marginTop = this._settings.get_int("margin-top");
+    this.marginBottom = this._settings.get_int("margin-bottom");
+    this.marginLeft = this._settings.get_int("margin-left");
+    this.marginRight = this._settings.get_int("margin-right");
   }
 
   enable() {
     this._settings = ExtensionUtils.getSettings();
     this._settings.connect("changed::gap-size", ()=>{this.initSettings();} );
     this._settings.connect("changed::no-gap-when-maximized", ()=>{this.initSettings();} );
+    this._settings.connect("changed::margin-top", ()=>{this.initSettings();} );
+    this._settings.connect("changed::margin-bottom", ()=>{this.initSettings();} );
+    this._settings.connect("changed::margin-left", ()=>{this.initSettings();} );
+    this._settings.connect("changed::margin-right", ()=>{this.initSettings();} );
     this.initSettings();
 
     _handles.push(global.window_manager.connect('size-changed', (_, act) => {this.window_manager_size_changed(act);}));
