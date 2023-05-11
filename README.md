@@ -20,12 +20,6 @@ Better not use this extension together with a specialized tiling extension like
 [gTile](https://extensions.gnome.org/extension/28/gtile/) or
 [Tactile](https://extensions.gnome.org/extension/4548/tactile/).
 
-In Gnome 3.38, the size of the gap can only be set with dconf.
-
-```
-dconf write /org/gnome/shell/extensions/useless-gaps/gap-size 25
-```
-
 ## Features
 
 - Gaps size is configurable
