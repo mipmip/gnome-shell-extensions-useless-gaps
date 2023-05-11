@@ -32,6 +32,21 @@ dconf write /org/gnome/shell/extensions/useless-gaps/gap-size 25
 - Create useless gaps around maximized windows
 - Create useless gaps around left and right split windows
 
+## Development and manual install
+
+After upgrading gnome-shell often complains about incompatibility issues. This is caused by version requirements set in src/metadata.json.
+
+You can install the extension manually by cloning the repo and then run
+
+```
+git clone https://github.com/mipmip/gnome-shell-extensions-useless-gaps.git
+cd gnome-shell-extensions-useless-gaps
+./install.sh local-install
+```
+
+The update the metadata.json with the Gnome version you are running.
+
+
 ## Contributing
 
 1. Fork it ( https://github.com/mipmip/gnome-shell-extensions-useless-gaps/fork )
