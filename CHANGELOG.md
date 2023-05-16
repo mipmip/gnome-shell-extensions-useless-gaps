@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Version 11
+- support Gnome 44
+
 ## Version 10
 - add custom margins
 - some cleanups
