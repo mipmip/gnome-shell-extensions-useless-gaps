@@ -79,7 +79,7 @@ class Extension {
     }
     // RIGHT WINDOW
     else{
-      xStart = this.marginLeft + this.gapSize + newWidth + this.gapSize;
+      xStart = rects.window.x + rects.window.w - this.marginRight - this.gapSize - newWidth;
     }
 
     window.unmaximize(Meta.MaximizeFlags.BOTH);
