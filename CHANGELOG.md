@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Version 12
+- fix: placement of right split window on secondary monitor (Jan Ouwens <github@jqno.nl>)
+
 ## Version 11
 - support Gnome 44
 

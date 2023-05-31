@@ -40,6 +40,13 @@ cd gnome-shell-extensions-useless-gaps
 
 The update the metadata.json with the Gnome version you are running.
 
+## Releasing
+
+- update changelog
+- bump version in metadata.json
+- push git tag and create release
+- create zip `./install.sh zip`
+- upload zip in extensions.gnome.org
 
 ## Contributing
 
