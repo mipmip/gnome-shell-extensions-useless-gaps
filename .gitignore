@@ -7,3 +7,4 @@ gschemas.compiled
 node_modules
 .temp.html
 .temp.seed
+*.sw*

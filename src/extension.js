@@ -14,16 +14,13 @@
  * along with Useless Gaps.  If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************/
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Meta = imports.gi.Meta;
+import { Extension, gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
+import { Meta } from 'gi://Meta';
 
 const _handles = [];
 const _windowids_size_change = {};
 
-class Extension {
-
-  constructor() {
-  }
+export default class UselessGapsExtension extends Extension {
 
   getRectangles(window) {
     const rect = window.get_frame_rect();
@@ -133,7 +130,7 @@ class Extension {
   }
 
   enable() {
-    this._settings = ExtensionUtils.getSettings();
+    this._settings = this.getSettings();
     this._settings.connect("changed::gap-size", ()=>{this.initSettings();} );
     this._settings.connect("changed::no-gap-when-maximized", ()=>{this.initSettings();} );
     this._settings.connect("changed::margin-top", ()=>{this.initSettings();} );
@@ -152,6 +149,3 @@ class Extension {
   }
 }
 
-function init() {
-  return new Extension();
-}
