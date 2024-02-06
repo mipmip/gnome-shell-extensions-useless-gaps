@@ -1,5 +1,5 @@
 /*********************************************************************
- * Useless Gaps is Copyright (C) 2021, 2022 Pim Snel
+ * Useless Gaps is Copyright (C) 2021-2024 Pim Snel
  *
  * Useless Gaps is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -16,15 +16,13 @@
 
 'use strict';
 
-import { Gtk } from 'gi://Gtk';
-import { GObject } from 'gi://GObject';
-import { Extension, gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
+import Gtk from 'gi://Gtk?version=4.0';
+import GObject from 'gi://GObject';
 
-const Me = ExtensionUtils.getCurrentExtension();
-const Uuid = Me.metadata.uuid.replace(/[^a-zA-Z]/g, '_');
+const Uuid = "useless-gaps@pimsnel.com".replace(/[^a-zA-Z]/g, '_');
 
 /* exported ListGrid */
-var ListGrid = GObject.registerClass({
+export var ListGrid = GObject.registerClass({
   GTypeName: 'Gjs_%s_UI_ListGrid'.format(Uuid),
 } ,class ListGrid extends Gtk.Grid {
   _init() {
@@ -62,7 +60,7 @@ var ListGrid = GObject.registerClass({
 });
 
 /* exported Box */
-var Box = GObject.registerClass({
+export var Box = GObject.registerClass({
   GTypeName: 'Gjs_%s_UI_Box'.format(Uuid),
 }, class Box extends Gtk.Box {
   _init(params) {
@@ -103,7 +101,7 @@ var Box = GObject.registerClass({
 });
 
 /* exported Frame */
-var Frame = GObject.registerClass({
+export var Frame = GObject.registerClass({
   GTypeName: 'Gjs_%s_UI_Frame'.format(Uuid),
 }, class Frame extends Gtk.Frame {
   _init(widget, label) {
@@ -121,7 +119,7 @@ var Frame = GObject.registerClass({
 });
 
 /* exported Check */
-var Check = GObject.registerClass({
+export var Check = GObject.registerClass({
   GTypeName: 'Gjs_%s_UI_Check'.format(Uuid),
 }, class Check extends Gtk.CheckButton {
   _init(x, y) {
@@ -135,7 +133,7 @@ var Check = GObject.registerClass({
 });
 
 /* exported Label */
-var Label = GObject.registerClass({
+export var Label = GObject.registerClass({
   GTypeName: 'Gjs_%s_UI_Label'.format(Uuid),
 }, class Label extends Gtk.Label {
   _init(x, y) {
@@ -149,7 +147,7 @@ var Label = GObject.registerClass({
 });
 
 /* exported LargeLabel */
-var LargeLabel = GObject.registerClass({
+export var LargeLabel = GObject.registerClass({
   GTypeName: 'Gjs_%s_UI_LargeLabel'.format(Uuid),
 }, class LargeLabel extends Gtk.Label {
   _init(x, y) {

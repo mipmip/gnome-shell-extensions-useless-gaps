@@ -1,5 +1,5 @@
 /*********************************************************************
- * Useless Gaps is Copyright (C) 2021, 2022 Pim Snel
+ * Useless Gaps is Copyright (C) 2021-2024 Pim Snel
  *
  * Useless Gaps is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -14,54 +14,41 @@
  * along with Useless Gaps.  If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************/
 
-import { GObject } from 'gi://GObject';
-import { Gio } from 'gi://Gio';
-import { Gtk } from 'gi://Gtk';
-//import { Extension, gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
-import { ExtensionPreferences } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
+import GObject from 'gi://GObject';
+import Gio from 'gi://Gio';
+import Gtk from 'gi://Gtk?version=4.0';
+import { ExtensionPreferences } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+import * as UI from './ui.js'
 
-const Me = ExtensionUtils.getCurrentExtension();
-const UI = Me.imports.ui;
-
-/**
- * Initialises the preferences widget
- */
-/* exported init */
-function init() {
-  ExtensionUtils.initTranslations();
+export default class UselessGapsPrefs extends ExtensionPreferences {
+    getPreferencesWidget() {
+        const widget = new UselessGapsPrefsWidget();
+        return widget;
+    }
 }
 
-/**
- * Builds the preferences widget
- */
-/* exported buildPrefsWidget */
 function buildPrefsWidget() {
-
   let widget = new UselessGapsPrefsWidget();
   return widget;
 }
 
-
-/**
- * Describes the widget that is shown in the extension settings section of
- * GNOME tweek.
- */
 const UselessGapsPrefsWidget = new GObject.Class({
   Name: 'Shortcuts.Prefs.Widget',
   GTypeName: 'UselessGapsPrefsWidget',
   Extends: Gtk.ScrolledWindow,
 
-  /**
-   * Initalises the widget
-   */
-  _init: function() {
+   _init: function() {
     this.parent(
       {
         valign: Gtk.Align.FILL,
         vexpand: true
       }
     );
-    this._settings = ExtensionUtils.getSettings();
+
+    let extensionObject;
+    extensionObject = ExtensionPreferences.lookupByURL(import.meta.url);
+    this._settings = extensionObject.getSettings();
+
 
     this.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
 
@@ -122,5 +109,3 @@ const UselessGapsPrefsWidget = new GObject.Class({
     this._settings.bind("margin-right", this._spinMarginRight, "value", Gio.SettingsBindFlags.DEFAULT);
   }
 });
-
-
