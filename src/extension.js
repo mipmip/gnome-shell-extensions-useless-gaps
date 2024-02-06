@@ -1,5 +1,5 @@
 /*********************************************************************
- * Useless Gaps is Copyright (C) 2021, 2022 Pim Snel
+ * Useless Gaps is Copyright (C) 2021-2024 Pim Snel
  *
  * Useless Gaps is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -15,7 +15,7 @@
  **********************************************************************/
 
 import { Extension, gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
-import { Meta } from 'gi://Meta';
+import Meta from 'gi://Meta';
 
 const _handles = [];
 const _windowids_size_change = {};
