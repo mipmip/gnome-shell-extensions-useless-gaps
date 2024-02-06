@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Version 13
+- support Gnome 45 (André poinck, https://github.com/poinck)
+- Italian Translations (Albano Battistella, https://github.com/albanobattistella)
+
+## Version 12
+- fix: placement of right split window on secondary monitor (Jan Ouwens <github@jqno.nl>)
+
 ## Version 11
 - support Gnome 44
 
@@ -42,4 +49,3 @@
 - override maximize function
 - override tile left/right function
 - initial information and docs
-
