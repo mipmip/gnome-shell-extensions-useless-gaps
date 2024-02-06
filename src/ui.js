@@ -16,8 +16,10 @@
 
 'use strict';
 
-const { Gtk, GObject } = imports.gi;
-const ExtensionUtils = imports.misc.extensionUtils;
+import { Gtk } from 'gi://Gtk';
+import { GObject } from 'gi://GObject';
+import { Extension, gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
+
 const Me = ExtensionUtils.getCurrentExtension();
 const Uuid = Me.metadata.uuid.replace(/[^a-zA-Z]/g, '_');
 

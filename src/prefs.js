@@ -14,11 +14,12 @@
  * along with Useless Gaps.  If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************/
 
-const GObject = imports.gi.GObject;
-const Gio = imports.gi.Gio;
-const Gtk = imports.gi.Gtk;
+import { GObject } from 'gi://GObject';
+import { Gio } from 'gi://Gio';
+import { Gtk } from 'gi://Gtk';
+//import { Extension, gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
+import { ExtensionPreferences } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
 
-const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const UI = Me.imports.ui;
 
