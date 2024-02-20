@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Version 14
+- code style updates
+
 ## Version 13
 - support Gnome 45 (André poinck, https://github.com/poinck)
 - Italian Translations (Albano Battistella, https://github.com/albanobattistella)
