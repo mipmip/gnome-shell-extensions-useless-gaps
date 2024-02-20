@@ -16,20 +16,17 @@
 
 import GObject from 'gi://GObject';
 import Gio from 'gi://Gio';
-import Gtk from 'gi://Gtk?version=4.0';
+import Gtk from 'gi://Gtk';
 import { ExtensionPreferences } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 import * as UI from './ui.js'
 
 export default class UselessGapsPrefs extends ExtensionPreferences {
-    getPreferencesWidget() {
-        const widget = new UselessGapsPrefsWidget();
-        return widget;
-    }
-}
 
-function buildPrefsWidget() {
-  let widget = new UselessGapsPrefsWidget();
-  return widget;
+  getPreferencesWidget() {
+    this._settings = this.getSettings();
+    const widget = new UselessGapsPrefsWidget(this._settings);
+    return widget;
+  }
 }
 
 const UselessGapsPrefsWidget = new GObject.Class({
@@ -37,7 +34,8 @@ const UselessGapsPrefsWidget = new GObject.Class({
   GTypeName: 'UselessGapsPrefsWidget',
   Extends: Gtk.ScrolledWindow,
 
-   _init: function() {
+   _init: function(settings) {
+
     this.parent(
       {
         valign: Gtk.Align.FILL,
@@ -45,10 +43,7 @@ const UselessGapsPrefsWidget = new GObject.Class({
       }
     );
 
-    let extensionObject;
-    extensionObject = ExtensionPreferences.lookupByURL(import.meta.url);
-    this._settings = extensionObject.getSettings();
-
+    this._settings = settings;
 
     this.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
 

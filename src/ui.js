@@ -16,7 +16,7 @@
 
 'use strict';
 
-import Gtk from 'gi://Gtk?version=4.0';
+import Gtk from 'gi://Gtk';
 import GObject from 'gi://GObject';
 
 const Uuid = "useless-gaps@pimsnel.com".replace(/[^a-zA-Z]/g, '_');
