@@ -23,8 +23,8 @@ import * as UI from './ui.js'
 export default class UselessGapsPrefs extends ExtensionPreferences {
 
   getPreferencesWidget() {
-    this._settings = this.getSettings();
-    const widget = new UselessGapsPrefsWidget(this._settings);
+    const settings = this.getSettings();
+    const widget = new UselessGapsPrefsWidget(settings);
     return widget;
   }
 }
