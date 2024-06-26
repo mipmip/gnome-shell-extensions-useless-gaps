@@ -108,6 +108,10 @@ export default class UselessGapsExtension extends Extension {
   {
     const win = act.meta_window;
 
+    // exclude selected monitor (if any)
+    if (win.get_monitor() == this.excludeMonitor) {
+      return;
+    }
     if (win.get_id() in _windowids_size_change) {
       if (!this.noGapsForMaximizedWindows && _windowids_size_change[win.get_id()]=="gapmax") {
         delete _windowids_size_change[win.get_id()];
@@ -127,6 +131,7 @@ export default class UselessGapsExtension extends Extension {
     this.marginBottom = this._settings.get_int("margin-bottom");
     this.marginLeft = this._settings.get_int("margin-left");
     this.marginRight = this._settings.get_int("margin-right");
+    this.excludeMonitor = this._settings.get_int("exclude-monitor");
   }
 
   enable() {
@@ -137,6 +142,7 @@ export default class UselessGapsExtension extends Extension {
     this._settings.connect("changed::margin-bottom", ()=>{this.initSettings();} );
     this._settings.connect("changed::margin-left", ()=>{this.initSettings();} );
     this._settings.connect("changed::margin-right", ()=>{this.initSettings();} );
+    this._settings.connect("changed::exclude-monitor", ()=>{this.initSettings();} );
     this.initSettings();
 
     _handles.push(global.window_manager.connect('size-changed', (_, act) => {this.window_manager_size_changed(act);}));
