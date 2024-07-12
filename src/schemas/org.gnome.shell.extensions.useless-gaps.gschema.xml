@@ -34,5 +34,11 @@
       <description>Margin right</description>
     </key>
 
+    <key name="exclude-monitor" type="i">
+      <default>-1</default>
+      <summary>Exclude monitor</summary>
+      <description>Exclude monitor</description>
+    </key>
+
   </schema>
 </schemalist>
