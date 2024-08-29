@@ -1,5 +1,5 @@
 <schemalist>
-  <schema id="org.gnome.shell.extensions.useless-gaps" path="/org/gnome/shell/extensions/useless-gaps/">
+  <schema id="org.gnome.shell.extensions.useless-gaps-pro" path="/org/gnome/shell/extensions/useless-gaps-pro/">
     <key name="gap-size" type="i">
       <default>20</default>
       <summary>Gap size between windows</summary>
@@ -34,7 +34,7 @@
       <description>Margin right</description>
     </key>
 
-    <key name="exclude-monitor" type="i">
+    <key name="apply-monitor" type="i">
       <default>-1</default>
       <summary>Exclude monitor</summary>
       <description>Exclude monitor</description>

@@ -16,6 +16,7 @@
 
 import { Extension, gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
 import Meta from 'gi://Meta';
+import Gio from 'gi://Gio';
 
 const _handles = [];
 const _windowids_size_change = {};
@@ -108,8 +109,8 @@ export default class UselessGapsExtension extends Extension {
   {
     const win = act.meta_window;
 
-    // exclude selected monitor (if any)
-    if (win.get_monitor() == this.excludeMonitor) {
+    // apply selected monitor (if any)
+    if (win.get_monitor() != this.applyMonitor) {
       return;
     }
     if (win.get_id() in _windowids_size_change) {
@@ -124,6 +125,33 @@ export default class UselessGapsExtension extends Extension {
     }
   }
 
+  async _getMonitorConfig() {
+    try {
+        // Run xrandr command to query monitor information
+        const proc = Gio.Subprocess.new(['xrandr', '--query'], Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE);
+        const [stdout, stderr] = await proc.communicate_utf8_async(null, null);
+        if (!proc.get_successful()) {
+            throw new Error(stderr);
+        }
+        const lines = stdout.split('\n');
+        for (const line of lines) {
+            // Extract enabled monitor names from xrandr output
+            const modeMatch = line.match(/(\d+x\d+\+\d+\+\d+)/); 
+            if (line.includes(' connected ') && modeMatch) {
+                const monitor = line.split(' ')[0];
+                // Set current monitor control
+                if (!line.includes(' primary ') && !this._monitor) {
+                    this._monitor = monitor;
+                }
+            }
+        }
+        console.error("USELESS_GAPS: monitor name:" + this._monitor);
+        // this._updateSelectedMonitor();
+    } catch (e) {
+        console.error(e);
+    }
+  }
+
   initSettings(){
     this.gapSize = this._settings.get_int("gap-size");
     this.noGapsForMaximizedWindows = this._settings.get_boolean("no-gap-when-maximized");
@@ -131,7 +159,7 @@ export default class UselessGapsExtension extends Extension {
     this.marginBottom = this._settings.get_int("margin-bottom");
     this.marginLeft = this._settings.get_int("margin-left");
     this.marginRight = this._settings.get_int("margin-right");
-    this.excludeMonitor = this._settings.get_int("exclude-monitor");
+    this.applyMonitor = this._settings.get_int("apply-monitor");
   }
 
   enable() {
@@ -142,8 +170,13 @@ export default class UselessGapsExtension extends Extension {
     this._settings.connect("changed::margin-bottom", ()=>{this.initSettings();} );
     this._settings.connect("changed::margin-left", ()=>{this.initSettings();} );
     this._settings.connect("changed::margin-right", ()=>{this.initSettings();} );
-    this._settings.connect("changed::exclude-monitor", ()=>{this.initSettings();} );
+    this._settings.connect("changed::apply-monitor", ()=>{this.initSettings();} );
     this.initSettings();
+
+    // Add callback to communicate_utf8_async method
+    Gio._promisify(Gio.Subprocess.prototype, 'communicate_utf8_async');
+    this._configsMap = {};
+    this._getMonitorConfig();
 
     _handles.push(global.window_manager.connect('size-changed', (_, act) => {this.window_manager_size_changed(act);}));
     _handles.push(global.window_manager.connect('size-change', (_, act, change,rectold) => {this.window_manager_size_change(act,change,rectold);}));
@@ -153,5 +186,6 @@ export default class UselessGapsExtension extends Extension {
     this._settings = null;
     _handles.splice(0).forEach(h => global.window_manager.disconnect(h));
   }
+
 }
 

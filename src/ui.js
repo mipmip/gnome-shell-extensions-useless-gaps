@@ -19,7 +19,7 @@
 import Gtk from 'gi://Gtk';
 import GObject from 'gi://GObject';
 
-const Uuid = "useless-gaps@pimsnel.com".replace(/[^a-zA-Z]/g, '_');
+const Uuid = "useless-gaps-pro@morrolinux.it".replace(/[^a-zA-Z]/g, '_');
 
 /* exported ListGrid */
 export var ListGrid = GObject.registerClass({

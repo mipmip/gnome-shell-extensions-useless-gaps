@@ -107,10 +107,10 @@ const UselessGapsPrefsWidget = new GObject.Class({
     this._spinExcludeMonitor.set_range(-1, 10);
     this._spinExcludeMonitor.set_increments(1, 1);
 
-    let label_exclude_monitor = new UI.Label('Exclude monitor number')
+    let label_exclude_monitor = new UI.Label('Only apply to monitor number')
     this._grid._add(label_exclude_monitor, this._spinExcludeMonitor);
 
-    this._settings.bind("exclude-monitor", this._spinExcludeMonitor, "value", Gio.SettingsBindFlags.DEFAULT);
+    this._settings.bind("apply-monitor", this._spinExcludeMonitor, "value", Gio.SettingsBindFlags.DEFAULT);
 
   }
 });

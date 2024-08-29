@@ -1,11 +1,11 @@
 {
-    "name": "Useless Gaps",
-    "uuid": "useless-gaps@pimsnel.com",
-    "url": "https://github.com/mipmip/gnome-shell-extensions-useless-gaps",
+    "name": "Useless Gaps Pro",
+    "uuid": "useless-gaps-pro@morrolinux.it",
+    "url": "https://github.com/morrolinux/gnome-shell-extensions-useless-gaps",
     "description": "For aesthetic purposes adds useless gaps around tiled and maximized windows",
-    "gettext-domain": "useless-gaps",
-    "settings-schema": "org.gnome.shell.extensions.useless-gaps",
-    "version": 16,
+    "gettext-domain": "useless-gaps-pro",
+    "settings-schema": "org.gnome.shell.extensions.useless-gaps-pro",
+    "version": 20,
     "shell-version": [
         "45",
         "46"
