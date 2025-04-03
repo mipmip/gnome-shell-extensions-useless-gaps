@@ -40,6 +40,15 @@ cd gnome-shell-extensions-useless-gaps
 
 The update the metadata.json with the Gnome version you are running.
 
+## Troubleshooting
+
+**Auto-maximization issue**:
+
+Sometimes when opening large applications, the window will be fully maximized without gaps.  This might be due to a setting in Gnome which is adjustable using the dconf editor:
+
+`/org/gnome/mutter/auto-maximize` (defaults is `true`. If you're experiencing this issue, try setting this to `false`)
+
+The description for the setting is `Auto maximize nearly monitor sized windows. If enabled, new windows that are initially the size of the monitor automatically get maximized.`
 
 ## Contributing
 
