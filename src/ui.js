@@ -24,7 +24,7 @@ const Uuid = "useless-gaps@pimsnel.com".replace(/[^a-zA-Z]/g, '_');
 /* exported ListGrid */
 export var ListGrid = GObject.registerClass({
   GTypeName: 'Gjs_%s_UI_ListGrid'.format(Uuid),
-} ,class ListGrid extends Gtk.Grid {
+}, class ListGrid extends Gtk.Grid {
   _init() {
     super._init({
       hexpand: true,
@@ -40,17 +40,17 @@ export var ListGrid = GObject.registerClass({
 
   _add(x, y, z) {
     this.attach(new Box().appends([x, y, z]), 0, this._count++, 2, 1);
-    if(!(x instanceof Gtk.CheckButton)) return;
-    if(y) x.bind_property('active', y, 'sensitive', GObject.BindingFlags.GET), y.set_sensitive(x.active);
-    if(z) x.bind_property('active', z, 'sensitive', GObject.BindingFlags.GET), z.set_sensitive(x.active);
+    if (!(x instanceof Gtk.CheckButton)) return;
+    if (y) x.bind_property('active', y, 'sensitive', GObject.BindingFlags.GET), y.set_sensitive(x.active);
+    if (z) x.bind_property('active', z, 'sensitive', GObject.BindingFlags.GET), z.set_sensitive(x.active);
   }
 
   _att(x, y, z) {
     let r = this._count++;
-    if(z) {
+    if (z) {
       this.attach(x, 0, r, 1, 1);
       this.attach(new Box().appends([y, z]), 1, r, 1, 1);
-    } else if(y) {
+    } else if (y) {
       this.attach(x, 0, r, 1, 1);
       this.attach(y, 1, r, 1, 1);
     } else {
@@ -65,9 +65,9 @@ export var Box = GObject.registerClass({
 }, class Box extends Gtk.Box {
   _init(params) {
     super._init();
-    if(params?.margins) this.set_margins(params.margins);
-    if(params?.spacing) this.set_spacing(params.spacing);
-    if(params?.vertical) this.set_orientation(Gtk.Orientation.VERTICAL);
+    if (params?.margins) this.set_margins(params.margins);
+    if (params?.spacing) this.set_spacing(params.spacing);
+    if (params?.vertical) this.set_orientation(Gtk.Orientation.VERTICAL);
   }
 
   set_margins(margins) {
@@ -77,7 +77,7 @@ export var Box = GObject.registerClass({
       this.set_margin_bottom(mgns[2]);
       this.set_margin_start(mgns[3]);
     };
-    switch(margins.length) {
+    switch (margins.length) {
       case 4: set_mgns(margins); break;
       case 3: set_mgns(margins.concat(margins[1])); break;
       case 2: set_mgns(margins.concat(margins)); break;
@@ -86,15 +86,15 @@ export var Box = GObject.registerClass({
   }
 
   appends(widgets) {
-    widgets.forEach(w => { if(w) this.append(w); });
+    widgets.forEach(w => { if (w) this.append(w); });
     return this;
   }
 
   appendS(widgets) {
     widgets.forEach((w, i, arr) => {
-      if(!w) return;
+      if (!w) return;
       this.append(w);
-      if(!Object.is(arr.length - 1, i)) this.append(new Gtk.Separator());
+      if (!Object.is(arr.length - 1, i)) this.append(new Gtk.Separator());
     });
     return this;
   }
@@ -113,7 +113,7 @@ export var Frame = GObject.registerClass({
     });
 
     this.set_child(widget);
-    if(!label) return;
+    if (!label) return;
     this.set_label_widget(new Gtk.Label({ use_markup: true, label: '<b><big>' + label + '</big></b>', }));
   }
 });
@@ -152,7 +152,7 @@ export var LargeLabel = GObject.registerClass({
 }, class LargeLabel extends Gtk.Label {
   _init(x, y) {
     super._init({
-      label: '<span size="x-large">'+x+'</span>',
+      label: '<span size="x-large">' + x + '</span>',
       use_markup: true,
       hexpand: true,
       halign: Gtk.Align.START,

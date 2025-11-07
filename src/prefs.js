@@ -34,7 +34,7 @@ const UselessGapsPrefsWidget = new GObject.Class({
   GTypeName: 'UselessGapsPrefsWidget',
   Extends: Gtk.ScrolledWindow,
 
-   _init: function(settings) {
+  _init: function (settings) {
 
     this.parent(
       {
