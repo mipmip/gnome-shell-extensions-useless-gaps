@@ -1,5 +1,7 @@
 # Useless Gaps
 
+## _[looking for a new maintainer](https://github.com/mipmip/gnome-shell-extensions-useless-gaps/issues/45)_
+
 https://user-images.githubusercontent.com/658612/199604411-f50fc915-ce67-432e-bdec-50d7eec8a9fb.mp4
 
 Useless Gaps is a GNOME Shell Extension which for aesthetic purposes, adds
