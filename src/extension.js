@@ -44,18 +44,47 @@ export default class UselessGapsExtension extends Extension {
     };
   }
 
+    /* Compatibility helper: older GNOME exposes get_maximized() returning
+   * Meta.MaximizeFlags, newer versions may instead provide boolean helpers
+   * or different method names. Feature-detect and normalize to flags so the
+   * rest of the code can continue to use Meta.MaximizeFlags checks.
+   */
+  _getMaximizedFlags(win) {
+    try {
+      if (typeof win.get_maximized === 'function') {
+        return win.get_maximized();
+      }
+
+      // Newer APIs may have boolean checks; combine them into flags.
+      let flags = 0;
+      if (typeof win.get_maximized_horizontally === 'function' && win.get_maximized_horizontally())
+        flags |= Meta.MaximizeFlags.HORIZONTAL;
+      if (typeof win.get_maximized_vertically === 'function' && win.get_maximized_vertically())
+        flags |= Meta.MaximizeFlags.VERTICAL;
+
+      // Some versions expose is_maximized or similar
+      if (typeof win.is_maximized === 'function' && win.is_maximized())
+        flags = Meta.MaximizeFlags.BOTH;
+
+      return flags;
+    }
+    catch (e) {
+      // If anything unexpected, assume not maximized
+      return 0;
+    }
+  }
+
   addWindowMargins(window){
     const rects = this.getRectangles(window);
 
-    const newWidth = rects.window.w - (this.gapSize*2) - this.marginLeft - this.marginRight;
-    const newHeight = rects.window.h - (this.gapSize*2) - this.marginTop - this.marginBottom;
-
+    const newWidth = rects.window.w-(this.gapSize*2)-this.marginLeft-this.marginRight;
+    const newHeight = rects.window.h-(this.gapSize*2)-this.marginTop-this.marginBottom;
+    
     const xStart = this.marginLeft + rects.workspace.x + this.gapSize;
     const yStart = this.marginTop + rects.workspace.y + this.gapSize;
-
-
-    if (window.get_maximized() === Meta.MaximizeFlags.BOTH){
-      window.unmaximize(Meta.MaximizeFlags.BOTH);
+ 
+    if (this._getMaximizedFlags(window) === Meta.MaximizeFlags.BOTH) {
+      window.unmaximize();
       window.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
     }
   }
@@ -63,23 +92,21 @@ export default class UselessGapsExtension extends Extension {
   addSplitWindowMargins(window){
 
     const rects = this.getRectangles(window);
+    
+    const yStart = this.marginTop + rects.workspace.y + this.gapSize;
+    const newHeight = rects.workspace.h-(this.gapSize*2)-this.marginTop-this.marginBottom;
+    const newWidth = (rects.workspace.w/2)-(this.gapSize*3/2)-(this.marginLeft/2)-(this.marginRight/2);
 
-    let yStart = this.marginTop + rects.workspace.y + this.gapSize;
-    let newHeight = rects.window.h - (this.gapSize*2) - this.marginTop - this.marginBottom;
-
-    let xStart;
-    let newWidth = rects.window.w - (this.gapSize*3/2) - (this.marginLeft/2) - (this.marginRight/2);
-
-    // LEFT WINDOW
-    if(rects.workspace.x === rects.window.x){
-      xStart = this.marginLeft + this.gapSize + rects.window.x;
+    // LEFT WINDOW: window center is left of workspace center
+    if (rects.window.x+(rects.window.w/2)<workspaceMidX) {
+      xStart = rects.workspace.x+this.marginLeft+this.gapSize;
     }
     // RIGHT WINDOW
-    else{
-      xStart = rects.window.x + rects.window.w - this.marginRight - this.gapSize - newWidth;
+    else {
+      xStart = workspaceMidX+(this.gapSize/2);
     }
 
-    window.unmaximize(Meta.MaximizeFlags.BOTH);
+    window.unmaximize();
     window.move_resize_frame(false, xStart, yStart, newWidth, newHeight);
   }
 
@@ -91,33 +118,48 @@ export default class UselessGapsExtension extends Extension {
     if (win.window_type !== Meta.WindowType.NORMAL)
       return;
 
-    if (change === Meta.SizeChange.MAXIMIZE)
-    {
-      if (win.get_maximized() === Meta.MaximizeFlags.BOTH)
-      {
-        //  global.log("uselessgaps change","=== Meta.MaximizeFlags.BOTH");
-        _windowids_size_change[win.get_id()]="gapmax";
-      }
-      else if(win.get_maximized() === Meta.MaximizeFlags.VERTICAL){
-        _windowids_size_change[win.get_id()]="gapvert";
-
-      }
-    }
+    // Mark all size changes, we'll determine the type in size-changed
+    _windowids_size_change[win.get_id()] = true;
   }
   window_manager_size_changed(act)
   {
     const win = act.meta_window;
+    const winId = win.get_id();
 
-    if (win.get_id() in _windowids_size_change) {
-      if (!this.noGapsForMaximizedWindows && _windowids_size_change[win.get_id()]=="gapmax") {
-        delete _windowids_size_change[win.get_id()];
+    if (!(winId in _windowids_size_change))
+      return;
+
+    delete _windowids_size_change[winId];
+
+    const maxFlags = this._getMaximizedFlags(win);
+
+    // Full maximize
+    if (maxFlags === Meta.MaximizeFlags.BOTH) {
+      if (!this.noGapsForMaximizedWindows) {
         this.addWindowMargins(win);
       }
-      else if (_windowids_size_change[win.get_id()]=="gapvert") {
-        delete _windowids_size_change[win.get_id()];
+      return;
+    }
+
+    // Tiled (left/right)
+    if (maxFlags === Meta.MaximizeFlags.VERTICAL || maxFlags === Meta.MaximizeFlags.HORIZONTAL) {
+      this.addSplitWindowMargins(win);
+      return;
+    }
+
+    // Fallback: geometry check
+    try {
+      const rect = win.get_frame_rect();
+      const workspace = win.get_workspace();
+      const monitorWorkArea = workspace.get_work_area_for_monitor(win.get_monitor());
+
+      const heightFull = rect.height >= monitorWorkArea.height*0.95;
+      const widthHalf = rect.width >= monitorWorkArea.width*0.45 && rect.width <= monitorWorkArea.width*0.55;
+
+      if (heightFull && widthHalf) {
         this.addSplitWindowMargins(win);
       }
-    }
+    } catch (e) { }
   }
 
   initSettings(){
